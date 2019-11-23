@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import '@atlaskit/css-reset';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-//import initialData from './initial-data';
+import initialData from './initial-data';
 import Column from './column';
 import styled from 'styled-components';
 
@@ -16,31 +16,10 @@ class InnerList extends React.PureComponent {
         const tasks = column.taskIds.map(taskId => taskMap[taskId]);
         return <Column column={column} tasks={tasks} index={index} />;
     }
-    componentDidUpdate() {
-        // fetch('http://api.nuc.local/columns/' + this.props.columnId, { method: 'delete', body: JSON.stringify({taskIds: column.taskIds}) }).then(response => response.json())
-    }
 }
 
 class App extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {tasks: [], columns: [], columnOrder: []};
-    }
-    componentDidMount() {
-        fetch('http://api.nuc.local/tasks').then(res => res.json()).then(data => {
-            this.setState({tasks: data});
-        }).catch(console.log);
-
-        fetch('http://api.nuc.local/columns').then(res => res.json()).then(data => {
-            this.setState({columns: data});
-        }).catch(console.log);
-
-        fetch('http://api.nuc.local/columnOrder').then(res => res.json()).then(data => {
-            this.setState({columnOrder: data});
-        }).catch(console.log);
-    }
-
-    //state = initialData;
+    state = initialData;
 
     onDragEnd = result => {
         const { destination, source, draggableId, type } = result;
